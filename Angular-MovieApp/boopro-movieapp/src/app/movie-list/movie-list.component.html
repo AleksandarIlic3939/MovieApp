@@ -5,26 +5,8 @@
 <div class="title" *ngIf="movies.length === 0">
     <div class="no-reviews">No movies yet</div>
 </div>
-<!-- <div class="home-container" *ngIf="movies.length !== 0">
-    <div class="all-movies">
-        <div class="trending-movies" *ngFor="let category of categories">
-            <div class="top">
-                <h4>{{ category.name }}</h4>
-                <div class="view-all">View All</div>
-            </div>
-            <div class="movies-thumbnail">
-                <div class="movie" *ngFor="let movie of movies | paginate: {itemsPerPage: 5, currentPage: p};">
-                    <div class="cover" (click)="movieDetails(movie.id)">
-                        <img [src]="movie.imageSrc" alt="" />
-                    </div>
-                    <div class="detail">
-                        <div class="name" (click)="movieDetails(movie.id)">{{ movie.name }}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+<!-- <div class="movie" *ngFor="let movie of movies | paginate: {itemsPerPage: 5, currentPage: p};">
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div> -->
 <div class="home-container">
     <div class="all-movies">
