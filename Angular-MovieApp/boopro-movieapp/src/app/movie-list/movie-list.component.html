@@ -1,0 +1,75 @@
+<div class="header-container">
+    <div class="logo" (click)="goToHome()">Netflix</div>
+    <div class="logout" (click)="logout()">Logout</div>
+</div>
+<div class="title" *ngIf="movies.length === 0">
+    <div class="no-reviews">No movies yet</div>
+</div>
+<!-- <div class="home-container" *ngIf="movies.length !== 0">
+    <div class="all-movies">
+        <div class="trending-movies" *ngFor="let category of categories">
+            <div class="top">
+                <h4>{{ category.name }}</h4>
+                <div class="view-all">View All</div>
+            </div>
+            <div class="movies-thumbnail">
+                <div class="movie" *ngFor="let movie of movies | paginate: {itemsPerPage: 5, currentPage: p};">
+                    <div class="cover" (click)="movieDetails(movie.id)">
+                        <img [src]="movie.imageSrc" alt="" />
+                    </div>
+                    <div class="detail">
+                        <div class="name" (click)="movieDetails(movie.id)">{{ movie.name }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div> -->
+<div class="home-container">
+    <div class="all-movies">
+        <div class="trending-movies" *ngFor="let category of categories">
+            <div class="top">
+                <h4>{{ category.name }}</h4>
+                <div class="view-all">View All</div>
+            </div>
+            <div class="movies-thumbnail">
+                <div class="movie" *ngFor="let movie of getMoviesByCategoryId(category.id)" style="margin-right: 9px;" (keypress)="spaceEvent($event)">
+                    <div *ngIf="movie.id !== 0">
+                        <div class="cover" (click)="movieDetails(movie.id)">
+                            <img [src]="movie.imageSrc" alt="" height="330px;" width="auto;" />
+                        </div>
+                        <div class="detail">
+                            <div class="name" (click)="movieDetails(movie.id)">{{ movie.name }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="theatre-movies">
+            <div class="top">
+                <h4>Popular in Theatres</h4>
+                <div class="view-all">View All</div>
+            </div>
+            <div class="movies-thumbnail">
+                <div class="movie" *ngFor="let movie of movies">
+                    <div class="cover" (click)="movieDetails(movie.id)">
+                        <img [src]="movie.imageSrc" alt="" height="330px;" width="auto;" />
+                    </div>
+                    <div class="detail">
+                        <div class="name" (click)="movieDetails(movie.id)">{{ movie.name }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popular-movies">
+        <h4>All Time Popular</h4>
+        <div class="movies">
+            <div class="movie" *ngFor="let movie of movies">
+                <div class="name" (click)="movieDetails(movie.id)">{{ movie.name }}</div>
+            </div>
+            <div class="view-all">View all</div>
+        </div>
+    </div>
+</div>

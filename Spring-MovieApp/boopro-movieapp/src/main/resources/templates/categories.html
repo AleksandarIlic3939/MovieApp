@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head th:replace="/fragments :: header">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul th:replace="/fragments :: sidebar">
+        </ul>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav th:replace="/fragments :: topbar">
+                </nav>
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div th:if="${size == 0}">
+                        <p>No category</p>
+                    </div>
+
+                    <button type="button" class="btn btn-success" style="margin-bottom: 10px;" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add new category</button>
+
+                    <div th:if="${success}" class="text-center alert alert-success">
+                        <p th:text="${success}" style="margin: auto;"></p>
+                    </div>
+                    <div th:if="${failed}" class="text-center alert alert-danger">
+                        <p th:text="${failed}" style="margin: auto;"></p>
+                    </div>
+
+                    <table th:if="${size > 0}" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Category Index</th>
+                            <th scope="col">Category Name</th>
+                            <th scope="col">Edit Category Name</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="category : ${categories}">
+                            <th scope="row" th:text="${category.id}"></th>
+                            <td th:text="${category.name}"></td>
+                            <td>
+                                <a th:href="@{/admin/categories/findCategoryById/(id = ${category.id})}" class="btn btn-warning" id="editButton">Update</a>
+                            </td>
+                            <td>
+                                <a th:href="@{/admin/categories/delete-category/(id = ${category.id})}" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!-- End of Page Heading -->
+
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li th:if="${currentPage != 0}" class="page-item">
+                                <a th:href="@{'/admin/categories/' + ${currentPage - 1}}" class="page-link">Previous</a>
+                            </li>
+                            <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i - 1 ? 'active' : ''}" class="page-item">
+                                <a th:href="@{'/admin/categories/' + ${i - 1}}" class="page-link"><span th:text="${i}"></span></a>
+                            </li>
+                            <li th:if="${currentPage + 1 != totalPage}" class="page-item">
+                                <a th:href="@{'/admin/categories/' + ${currentPage + 1}}" class="page-link">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+                <!-- End of Page Content -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer th:replace="/fragments :: footer">
+            </footer>
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a th:replace="/fragments :: scroll">
+    </a>
+
+    <!-- Logout Modal-->
+    <th:block th:replace="/fragments :: logoutModal">
+    </th:block>
+
+    <!-- Add Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form th:action="@{/admin/categories/add-category}" method="POST" th:object="${categoryNew}">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New Category</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Name:</label>
+                            <input type="text" th:field="*{name}" class="form-control" id="recipient-name">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- End of Add Modal -->
+
+    <!-- Change Name Category Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalExample" aria-hidden="true">
+        <form th:action="@{/admin/categories/update-category}" method="PUT">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Category</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="idEdit" class="col-form-label">ID:</label>
+                            <input type="number" class="form-control" id="idEdit" name="id" readonly>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="nameEdit" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="nameEdit" name="name">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- End of change category name -->
+
+    <!-- Bootstrap core JavaScript -->
+    <th:block th:replace="/fragments :: script">
+    </th:block>
+
+    <script th:src="@{/js/categories.js}"></script>
+
+</body>
+
+</html>
